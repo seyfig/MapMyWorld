@@ -1,0 +1,70 @@
+%% V1.0
+%% by Gabriel Garcia, gabrcg@gmail.com
+%% This is a template for Udacity projects using IEEEtran.cls
+
+%% Be Udacious!
+
+\documentclass[10pt,journal,compsoc]{IEEEtran}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{cite}
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+
+\title{Map My World}
+
+\author{Seyfi Gozubuyuk}
+
+\markboth{SLAM project, Robotics Nanodegree Program, Udacity}%
+{}
+\IEEEtitleabstractindextext{%
+
+\begin{abstract}
+In this project, the aim is to utilize ROS packages to create map of two different environments. A mobile robot will navigate in the Gazebo and RViz simulation environments to obtain data. The overview of the tasks can are as follows, creating map for the given environment, create a new environment and build the map of the new environment using RTAB-Map ROS package.
+\end{abstract}
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+Robot, IEEEtran, Udacity, \LaTeX, SLAM, RTAB-Map, ROS, Robot Model.
+\end{IEEEkeywords}}
+
+
+\maketitle
+\IEEEdisplaynontitleabstractindextext
+\IEEEpeerreviewmaketitle
+\section{Introduction}
+\label{sec:introduction}
+
+\IEEEPARstart{T}{he} problem is to create the map of an environment while the robot is navigating. The robot model was built in the previous project, Where Am I\cite{git:whereami}. In the localization problem, the robot knows the map, and the sensor measurements help the robot to localize itself. On the contrary, the map is not available in the mapping or the SLAM problem. SLAM stands for Simultaneous Localization and Mapping \cite{wiki:slam}, and it needs to obtain the map to localize the robot and to localize the robot to create the map.
+\\
+The most common algorithms are Fast SLAM and Graph SLAM. This project test the RTAB-MAP (Real-Time Appearance-Based Mapping)\cite{rtab}. There are two different worlds to test the algorithm. The first one is the kitchen world provided in the lessons. The second test world is xworld, which was developed as a part of the project.
+The project environment contains Gazebo and RViz on ROS Kinetic, which was running on Ubuntu 16.04. The ROS packages required to run this project are RTABMap. In addition, the provided scripts teleop and rtab\textunderscore enable the project to run.
+
+\section{Background}
+The problem is to create a map of the environment, as mentioned earlier. Furthermore, localization of the robot is a requirement to complete the task. Since the sensors are not precise, there is noise to affect the measurements coming from the sensors, and the controls are not perfect to move the vehicle to the desired location. Therefore, the algorithm should handle the noise.
+
+\subsection{Occupancy Grid Mapping}
+Occupancy Grid Mapping is an algorithm that assumes the location of the robot is available when constructing the map\cite{wiki:ogm}. During SLAM operation, then the algorithm builds the map of the environment and localize the robot relative to it. After, the algorithm uses the exact robot poses filtered from SLAM. Then, using the known poses from SLAM and noisy measurements from the sensors generates a fit for path planning and navigation.
+
+\subsection{Grid-based FastSLAM}
+FastSLAM estimates a posterior over trajectory using particle filters. It solves the Full SLAM problem. Full SLAM looks for the entire path up to time t, using all of the controls and measurements. It has the advantage of mapping with known poses and utilizes low dimensional EKF to solve independent features of the map.
+\\
+Grid-based FastSLAM uses Monte Carlo Localization (MCL) instead of EKF. It first estimates the trajectory, then the map by assuming known poses and applying the occupancy grid mapping algorithm.
+\\
+In the Grid-based FastSLAM technique, there are three steps. First one is sampling motion. In this step, the current location of a given particle is calculated using the previous one and the current controls. In the second step, which is map estimation, with the inputs of current measurements, the particles current location and the previous map, the next map is estimated. The last step updates the weights of the particles.
+
+\subsection{GraphSLAM}
+GraphSLAM uses a graph representation to the SLAM problem. It constructs graphs and then matrices. They help to determine different observations showing the same landmark.\cite{wiki:gslam}. The main feature of GraphSLAM is graph optimization with maximum likelihood estimation (MLE). The procedure is as follows
+\begin{enumerate}
+  \item Remove inconsequential constants.
+  \item Convert the equation from likelihood estimation to negative lo likelihood estimation
+  \item Calculate the first derivative of the function and set it to zero to find extrema.
+\end{enumerate}
+
+
+\bibliography{bib}
+\bibliographystyle{ieeetr}
+
+\end{document}
