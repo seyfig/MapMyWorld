@@ -1,0 +1,7 @@
+image: xworld.pgm
+resolution: 0.050000
+origin: [-9.753929, -3.931288, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+
