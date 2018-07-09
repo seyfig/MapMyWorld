@@ -47,7 +47,3 @@ To view recorded RTABMap database:
 ``` bash
 $ rtabmap-databaseViewer ~/.ros/rtabmap.db
 ```
-
-## Databases
-The recorded databases have a size greater than 100MB for each. Therefore, they are stored in Google Drive. The link is as follows:
-https://drive.google.com/drive/folders/14CR-ov-U2nzQxGAV2I7jGU6f5yugSc5v?usp=sharing
